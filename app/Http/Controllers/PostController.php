@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
@@ -24,12 +25,17 @@ class PostController extends Controller
         return View('add_post');
     }
 
-    public function store(Request $request)
+    protected function validator(array $data)
     {
-        $this->validate($request, [
+        return Validator::make($data, [
             'title' => 'bail|required',
             'content' => 'bail|required'
         ]);
+    }
+
+    public function store(Request $request)
+    {
+        $this->validator($request->all())->validate();
 
         $post = $request->all();
         Post::create($post);
