@@ -1,22 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            @foreach ($posts as $post)
-                <h2>
-                    <a href="{{ url("/posts/{$post->id}") }}">{{ $post->title }}</a>
-                </h2>
-                <p>{{ $post->content }}</p>
-
-               @include('inc.delete')
-
-            @endforeach
-            {{ $posts->links() }}
-
+            <h2>
+                <a href="{{ url("/posts/") }}">Voir les articles</a>
+            </h2>
         </div>
     </div>
 </div>
+               
 @endsection
 

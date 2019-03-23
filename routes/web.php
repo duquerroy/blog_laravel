@@ -12,11 +12,10 @@
 */
 
 
-Route::get('/', 'PostController@index')->name('post');
-Route::get('/posts/{id}', 'PostController@view');
-Route::get('/post_add', 'PostController@create')->middleware('auth');
-Route::post('/post_add', 'PostController@store')->middleware('auth');
-Route::delete('/posts/{id}', 'PostController@delete');
+Route::get('/', function(){
+  return view('welcome');
+});
+Route::resource('posts', 'PostController');
 
 Auth::routes();
 

@@ -50,7 +50,10 @@
                             @endif
                         @else
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url("post_add") }}">Écrire article</a>
+                                <a class="nav-link" href="{{ url("posts/") }}">Articles</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url("posts/create") }}">Écrire article</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

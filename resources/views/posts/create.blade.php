@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-           <form action="{{ url("post_add") }}"  method="POST" class="form-horizontal">
+           <form action="{{ url("posts") }}"  method="POST" class="form-horizontal">
             @csrf
             @if ($errors->any())
                 <div class="alert alert-danger" role="alert">
@@ -14,7 +14,7 @@
             <div class="form-group">
                 <label for="task" class="col-sm-3 control-label">Titre</label>
                 <div class="col-sm-6">
-                    <input type="text" name="title" id="task-name" class="form-control {{ $errors->has('content') ? 'is-invalid' : '' }}">
+                    <input type="text" name="title" id="task-name" class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}" value="{{ old('title') }}">
                     @if($errors->has('title'))
                       <div class="invalid-feedback">{{ $errors->first('title') }}</div>
                     @endif
@@ -24,7 +24,7 @@
             <div class="form-group{{ $errors->has('content') ? ':invalid' : '' }}">
                 <label for="task" class="col-sm-3 control-label">Texte</label>
                 <div class="col-sm-6">
-                    <textarea type="text" name="content" id="task-name" class="form-control {{ $errors->has('content') ? 'is-invalid' : '' }}"></textarea>
+                <textarea type="text" name="content" id="task-name" class="form-control {{ $errors->has('content') ? 'is-invalid' : '' }}">{{ old('content') }}</textarea>
                     @if($errors->has('content'))
                       <span class="invalid-feedback">{{ $errors->first('content') }}</span>
                   @endif

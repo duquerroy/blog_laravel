@@ -8,21 +8,36 @@ use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth', ['except' => ['index','show']]);
+    }
+
     public function index()
     {
         $posts = Post::orderBy('created_at', 'desc')->paginate(4);
-        return View('welcome', compact('posts'));
+        return view('posts.index', compact('posts'));
     }
 
-    public function view($id)
+    public function show(Post $post)
     {
-        $post = Post::find($id);
-        return View('post', compact('post'));
+        return view('posts.show', compact('post'));
     }
 
     public function create()
     {
-        return View('add_post');
+        return view('posts.create');
+    }
+
+    public function edit(Post $post)
+    {
+        return view('posts.edit', compact('post'));
+    }
+
+    public function update(Post $post)
+    {
+        $post->update(request()->all());
+        
+        return redirect('/posts');
     }
 
     protected function validator(array $data)
@@ -40,12 +55,13 @@ class PostController extends Controller
         $post = $request->all();
         Post::create($post);
  
-        return redirect('/');
+        return redirect('/posts');
     }
 
-    public function delete($id)
+    public function destroy(Post $post)
     {
-        $post = Post::destroy($id);
-        return redirect('/');
+        $post->delete();
+        // $post = Post::destroy($id);
+        return redirect('/posts');
     }
 }
