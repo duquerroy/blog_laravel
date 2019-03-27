@@ -20,7 +20,8 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        return view('posts.show', compact('post'));
+        $categories = $post->categories;
+        return view('posts.show', compact('post', 'categories'));
     }
 
     public function create()
