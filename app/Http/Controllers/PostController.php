@@ -21,8 +21,7 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        $categories = $post->categories;
-        return view('posts.show', compact('post', 'categories'));
+        return view('posts.show', compact('post'));
     }
 
     public function create()
@@ -52,11 +51,11 @@ class PostController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store()
     {
-        $this->validator($request->all())->validate();
+        $this->validator(request()->all())->validate();
 
-        $post = Post::create($request->all());
+        $post = Post::create(request()->all());
         $post->categories()->sync(request()->get('categories'));
  
         return redirect('/posts');
@@ -65,7 +64,6 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
-        // $post = Post::destroy($id);
         return redirect('/posts');
     }
 }
