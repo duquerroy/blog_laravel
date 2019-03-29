@@ -9,6 +9,9 @@
                     <a href="{{ url("/posts/{$post->id}") }}">{{ $post->title }}</a>
                 </h2>
                 <p>{{ $post->content }}</p>
+                @foreach ($post->categories as $category)
+                    <li>{{ $category->name }}</li>
+                @endforeach
 
                @include('inc.delete-button')
                @include('inc.edit-button')

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use App\Category;
 use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
@@ -26,18 +27,20 @@ class PostController extends Controller
 
     public function create()
     {
-        return view('posts.create');
+        $categories = Category::pluck('name', 'id');
+        return view('posts.create', compact('categories'));
     }
 
     public function edit(Post $post)
     {
-        return view('posts.edit', compact('post'));
+        $categories = Category::pluck('name', 'id');
+        return view('posts.edit', compact('post', 'categories'));
     }
 
     public function update(Post $post)
     {
         $post->update(request()->all());
-        
+        $post->categories()->sync(request()->get('categories'));
         return redirect('/posts');
     }
 
@@ -53,8 +56,8 @@ class PostController extends Controller
     {
         $this->validator($request->all())->validate();
 
-        $post = $request->all();
-        Post::create($post);
+        $post = Post::create($request->all());
+        $post->categories()->sync(request()->get('categories'));
  
         return redirect('/posts');
     }
