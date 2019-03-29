@@ -8,7 +8,9 @@
               {{ $post->title }}
           </h2>
           <p>{{ $post->content }}</p>
-          
+          @foreach ($categories as $category)
+            <li>{{ $category->name }}</li>
+          @endforeach
         </div>
     </div>
 </div>
