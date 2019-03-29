@@ -26,7 +26,8 @@ class PostController extends Controller
 
     public function create()
     {
-        return view('posts.create');
+        $categories = Category::pluck('name', 'id');
+        return view('posts.create', compact('categories'));
     }
 
     public function edit(Post $post)
@@ -54,8 +55,8 @@ class PostController extends Controller
     {
         $this->validator($request->all())->validate();
 
-        $post = $request->all();
-        Post::create($post);
+        $post = Post::create($request->all());
+        $post->categories()->sync(request()->get('categories'));
  
         return redirect('/posts');
     }

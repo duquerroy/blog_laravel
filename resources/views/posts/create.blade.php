@@ -32,6 +32,19 @@
             </div>
 
             <div class="form-group">
+                <label for="categories" class="col-sm-3 control-label">Catégories</label>
+                <div class="col-sm-6">
+                    <select class="form-control" name="categories[]" id="categories" multiple=true>
+                        @foreach($categories as $id => $name)
+                            <option value="{{ $id }}">
+                                {{ $name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-6">
                     <button type="submit" class="btn btn-default">
                         Validez
