@@ -10,4 +10,4 @@
 ## Exercice pour formation 420-DW5-FX PROGRAMMATION 2
 
 
-- [Voir le blogue](http://164.132.69.249/blog_laravel).
+- [Voir le blogue](http://164.132.69.249/blog_laravel/public/).
