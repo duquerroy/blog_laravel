@@ -11,6 +11,7 @@ class PostController extends Controller
 {
     public function __construct(){
         $this->middleware('auth', ['except' => ['index','show']]);
+        $this->middleware('ajax')->only('destroy');
     }
 
     public function index()
@@ -63,7 +64,12 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
-        $post->delete();
-        return redirect('/posts');
+        if ($post->delete()){
+            return response()->json([
+                'id' => $post->id
+            ], 200);
+        } else {
+            return response()->json(['message' => 'Not Found!'], 404);
+        }
     }
 }
