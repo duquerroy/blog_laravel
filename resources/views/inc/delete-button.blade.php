@@ -1,5 +1,5 @@
 @auth
-<form action="{{ url('posts/'.$post->id) }}" method="POST">
+<form action="{{ url('posts/'.$post->id) }}" method="POST" class="form-delete">
     {{ csrf_field() }}
     {{ method_field('DELETE') }}
 
@@ -8,3 +8,4 @@
     </button>
 </form>
 @endauth
+
