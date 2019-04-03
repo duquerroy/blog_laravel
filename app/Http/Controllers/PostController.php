@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Post;
 use App\Category;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image as InterventionImage;
+
 
 class PostController extends Controller
 {
@@ -49,15 +52,27 @@ class PostController extends Controller
     {
         return Validator::make($data, [
             'title' => 'bail|required',
+            //'image' => 'required|image|max:2000',
             'content' => 'bail|required'
         ]);
     }
 
-    public function store()
+    public function store(Request $request)
     {
+        $path = basename ($request->image->store('images', 'public'));
+
         $this->validator(request()->all())->validate();
 
-        $post = Post::create(request()->all());
+
+        // Save thumb
+        $image = InterventionImage::make($request->image)->widen(500)->encode();
+        Storage::put('images/thumbs/' . $path, $image);
+
+        
+        $post['name'] = $path;
+        $post['content'] = $request->content;
+        $post['title'] = $request->title;
+        $post = Post::create($post);
         $post->categories()->sync(request()->get('categories'));
  
         return redirect('/posts');

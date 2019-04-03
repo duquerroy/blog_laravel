@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-           <form action="{{ url("posts") }}"  method="POST" class="form-horizontal">
+           <form action="{{ url("posts") }}"  method="POST" class="form-horizontal" enctype="multipart/form-data">
             @csrf
             @if ($errors->any())
                 <div class="alert alert-danger" role="alert">
@@ -29,6 +29,20 @@
                       <span class="invalid-feedback">{{ $errors->first('content') }}</span>
                   @endif
                 </div>
+            </div>
+
+            <div class="form-group{{ $errors->has('image') ? ' is-invalid' : '' }}">
+                <div class="custom-file">
+                    <input type="file" id="image" name="image"
+                           class="{{ $errors->has('image') ? ' is-invalid ' : '' }}custom-file-input" required>
+                    <label class="custom-file-label" for="image"></label>
+                    @if ($errors->has('image'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('image') }}
+                        </div>
+                    @endif
+                </div>
+                <br>
             </div>
 
             <div class="form-group">
