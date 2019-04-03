@@ -12,6 +12,7 @@ class PostController extends Controller
     public function __construct(){
         $this->middleware('auth', ['except' => ['index','show']]);
         $this->middleware('ajax')->only('destroy');
+        $this->middleware('admin')->only(['create', 'update', 'edit', 'store']);
     }
 
     public function index()

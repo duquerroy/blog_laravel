@@ -20,3 +20,6 @@ Route::resource('posts', 'PostController');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'AdminController@index')->name('admin')->prefix('admin')->middleware('admin');
+
+

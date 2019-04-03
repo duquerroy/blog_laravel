@@ -13,9 +13,11 @@
                     @foreach ($post->categories as $category)
                         <li>{{ $category->name }}</li>
                     @endforeach
-
-                @include('inc.delete-button')
-                @include('inc.edit-button')
+                    @admin
+                        @include('inc.delete-button')
+                        @include('inc.edit-button')
+                    @endadmin
+                    <p>{{ $post->updated_at }}</p>
                 </div>
             @endforeach
             <div class="mt-3">

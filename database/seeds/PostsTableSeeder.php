@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Faker\Generator as Faker;
+use Carbon\Carbon;
 
 class PostsTableSeeder extends Seeder
 {
@@ -16,6 +17,8 @@ class PostsTableSeeder extends Seeder
             DB::table('posts')->insert([
                 'title' => $faker->sentence(2),
                 'content' => $faker->realText,
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 ]);
         }
     }
