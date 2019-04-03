@@ -57,7 +57,7 @@
                                     <a class="nav-link" href="{{ url("posts/create") }}">Écrire article</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ url("admin") }}">Admin</a>
+                                    <a class="nav-link" href="{{ route("admin") }}">Admin</a>
                                 </li>
                             @endadmin
                             <li class="nav-item dropdown">
