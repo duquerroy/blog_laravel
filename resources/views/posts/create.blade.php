@@ -24,7 +24,7 @@
             <div class="form-group{{ $errors->has('content') ? ':invalid' : '' }}">
                 <label for="task" class="col-sm-3 control-label">Texte</label>
                 <div class="col-sm-6">
-                <textarea type="text" name="content" id="task-name" class="form-control {{ $errors->has('content') ? 'is-invalid' : '' }}">{{ old('content') }}</textarea>
+                    <textarea type="text" name="content" id="task-name" class="form-control {{ $errors->has('content') ? 'is-invalid' : '' }}">{{ old('content') }}</textarea>
                     @if($errors->has('content'))
                       <span class="invalid-feedback">{{ $errors->first('content') }}</span>
                   @endif
@@ -32,17 +32,15 @@
             </div>
 
             <div class="form-group{{ $errors->has('image') ? ' is-invalid' : '' }}">
-                <div class="custom-file">
-                    <input type="file" id="image" name="image"
-                           class="{{ $errors->has('image') ? ' is-invalid ' : '' }}custom-file-input" required>
-                    <label class="custom-file-label" for="image"></label>
+                <div class="col-sm-6">
+                    <label class="custom-file-label offset-md-1 col-sm-6" for="image">Image</label>
+                    <input type="file" id="image" name="image" class="{{ $errors->has('image') ? ' is-invalid ' : '' }} custom-file-input" required>
                     @if ($errors->has('image'))
                         <div class="invalid-feedback">
                             {{ $errors->first('image') }}
                         </div>
                     @endif
                 </div>
-                <br>
             </div>
 
             <div class="form-group">
