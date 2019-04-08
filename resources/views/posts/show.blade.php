@@ -12,6 +12,7 @@
             <li>{{ $category->name }}</li>
           @endforeach
         </div>
+        <img src="/images/thumbs/{{ $post->name }}" alt="">
     </div>
 </div>
 @endsection
