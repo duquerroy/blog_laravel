@@ -52,21 +52,20 @@ class PostController extends Controller
     {
         return Validator::make($data, [
             'title' => 'bail|required',
-            //'image' => 'required|image|max:2000',
+            'image' => 'required|image|max:20000',
             'content' => 'bail|required'
         ]);
     }
 
     public function store(Request $request)
     {
-        $path = basename ($request->image->store('images', 'public'));
-
         $this->validator(request()->all())->validate();
 
+        $path = basename ($request->image->store('images', 'public'));
 
         // Save thumb
         $image = InterventionImage::make($request->image)->widen(500)->encode();
-        Storage::put('images/thumbs/' . $path, $image);
+        Storage::put('public/thumbs/' . $path, $image);
 
         
         $post['name'] = $path;
