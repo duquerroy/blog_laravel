@@ -34,7 +34,7 @@
             <div class="form-group{{ $errors->has('image') ? ' is-invalid' : '' }}">
                 <div class="col-sm-6">
                     <label class="custom-file-label offset-md-1 col-sm-6" for="image">Image</label>
-                    <input type="file" id="image" name="image" class="{{ $errors->has('image') ? ' is-invalid ' : '' }} custom-file-input" required>
+                    <input type="file" id="image" name="image" class="{{ $errors->has('image') ? ' is-invalid ' : '' }} custom-file-input">
                     @if ($errors->has('image'))
                         <div class="invalid-feedback">
                             {{ $errors->first('image') }}

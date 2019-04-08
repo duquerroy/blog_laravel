@@ -44,19 +44,18 @@ class PostController extends Controller
     public function update(Post $post, Request $request)
     {
         $this->validator(request()->all())->validate();
-        
-        $path = basename ($request->image->store('images', 'public'));
+        $path = $post->name;
+        if ($request->image){
+            $path = basename ($request->image->store('images', 'public'));
+            // Save thumb
+            $image = InterventionImage::make($request->image)->widen(500)->encode();
+            Storage::put('public/thumbs/' . $path, $image);
+        }
 
-        // Save thumb
-        $image = InterventionImage::make($request->image)->widen(500)->encode();
-        Storage::put('public/thumbs/' . $path, $image);
-
-        
         $post['name'] = $path;
         $post['content'] = $request->content;
         $post['title'] = $request->title;
         $post->update(request()->all());
-        // $post = Post::update($post);
         $post->categories()->sync(request()->get('categories'));
         return redirect('/posts');
     }
@@ -65,7 +64,7 @@ class PostController extends Controller
     {
         return Validator::make($data, [
             'title' => 'bail|required',
-            'image' => 'required|image|max:20000',
+            'image' => 'image|max:20000',
             'content' => 'bail|required'
         ]);
     }
