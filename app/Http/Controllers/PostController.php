@@ -41,9 +41,22 @@ class PostController extends Controller
         return view('posts.edit', compact('post', 'categories'));
     }
 
-    public function update(Post $post)
+    public function update(Post $post, Request $request)
     {
+        $this->validator(request()->all())->validate();
+        
+        $path = basename ($request->image->store('images', 'public'));
+
+        // Save thumb
+        $image = InterventionImage::make($request->image)->widen(500)->encode();
+        Storage::put('public/thumbs/' . $path, $image);
+
+        
+        $post['name'] = $path;
+        $post['content'] = $request->content;
+        $post['title'] = $request->title;
         $post->update(request()->all());
+        // $post = Post::update($post);
         $post->categories()->sync(request()->get('categories'));
         return redirect('/posts');
     }
