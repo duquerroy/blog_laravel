@@ -17,7 +17,7 @@ Route::get('/', function(){
 });
 Route::resource('posts', 'PostController');
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/users', 'AdminController@index')->name('admin')->prefix('admin')->middleware('admin');
