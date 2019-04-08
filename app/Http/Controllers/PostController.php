@@ -57,7 +57,7 @@ class PostController extends Controller
         $post['title'] = $request->title;
         $post->update(request()->all());
         $post->categories()->sync(request()->get('categories'));
-        return redirect('/posts');
+        return redirect('/posts')->with('status', "L'article a bien été modifié");
     }
 
     protected function validator(array $data)
@@ -86,7 +86,7 @@ class PostController extends Controller
         $post = Post::create($post);
         $post->categories()->sync(request()->get('categories'));
  
-        return redirect('/posts');
+        return redirect('/posts')->with('status', "L'article a bien été créé");;
     }
 
     public function destroy(Post $post)
