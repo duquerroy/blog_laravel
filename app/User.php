@@ -37,6 +37,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    public function posts()
+    {
+        return $this->belongsToMany(Post::class);
+    }
+
     /**
      * User is admin.
      *

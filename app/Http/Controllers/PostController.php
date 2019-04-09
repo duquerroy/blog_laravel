@@ -8,6 +8,8 @@ use App\Category;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image as InterventionImage;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PostCreated;
 
 
 class PostController extends Controller
@@ -70,22 +72,29 @@ class PostController extends Controller
     }
 
     public function store(Request $request)
-    {
+    {   
         $this->validator(request()->all())->validate();
+        $path = '';
+        if ($request->image){
+            $path = basename ($request->image->store('images', 'public'));
 
-        $path = basename ($request->image->store('images', 'public'));
-
-        // Save thumb
-        $image = InterventionImage::make($request->image)->widen(500)->encode();
-        Storage::put('public/thumbs/' . $path, $image);
+            // Save thumb
+            $image = InterventionImage::make($request->image)->widen(500)->encode();
+            Storage::put('public/thumbs/' . $path, $image);
+        }
 
         
         $post['name'] = $path;
         $post['content'] = $request->content;
         $post['title'] = $request->title;
+        $post['user_id'] = $request->user()->id;
         $post = Post::create($post);
         $post->categories()->sync(request()->get('categories'));
- 
+
+        Mail::to($post->user->email)->send(
+            new PostCreated($post)
+        );
+
         return redirect('/posts')->with('status', "L'article a bien été créé");;
     }
 
