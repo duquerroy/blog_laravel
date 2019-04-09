@@ -11,14 +11,16 @@ class PostCreated extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $post;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($post)
     {
-        //
+        $this->post = $post;
     }
 
     /**

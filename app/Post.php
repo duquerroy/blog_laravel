@@ -4,10 +4,24 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PostCreated;
 
 class Post extends Model
 {
     protected $fillable = ['title', 'content', 'name', 'user_id'];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saved(function($post) {
+            Mail::to($post->user->email)->send(
+                new PostCreated($post)
+            );
+        });
+
+    }
 
     public function categories()
     {

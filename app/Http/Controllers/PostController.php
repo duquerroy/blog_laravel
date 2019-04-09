@@ -8,9 +8,6 @@ use App\Category;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image as InterventionImage;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\PostCreated;
-
 
 class PostController extends Controller
 {
@@ -90,10 +87,6 @@ class PostController extends Controller
         $post['user_id'] = $request->user()->id;
         $post = Post::create($post);
         $post->categories()->sync(request()->get('categories'));
-
-        Mail::to($post->user->email)->send(
-            new PostCreated($post)
-        );
 
         return redirect('/posts')->with('status', "L'article a bien été créé");;
     }
