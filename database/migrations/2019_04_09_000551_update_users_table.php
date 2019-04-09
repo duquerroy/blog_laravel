@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdatePostsTable extends Migration
+class UpdateUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class UpdatePostsTable extends Migration
      */
     public function up()
     {
-        Schema::table('posts', function (Blueprint $table) {
-            $table->string('name')->nullable();
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('role')->nullable();
         });
     }
 
@@ -25,8 +25,8 @@ class UpdatePostsTable extends Migration
      */
     public function down()
     {
-        Schema::table('posts', function (Blueprint $table) {
-            $table->dropColumn('name');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('role');
         });
     }
 }
