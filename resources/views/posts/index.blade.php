@@ -7,7 +7,7 @@
             @foreach ($posts as $post)
                 <div id="post-{{ $post->id }}">
                     <h2>
-                        <a href="{{ url("/posts/{$post->id}") }}">{{ $post->title }}</a>
+                       <a href="{{ url("/posts/{$post->id}") }}">{{ $post->title }}</a>
                     </h2>
                     <p>{{ $post->content }}</p>
                     @foreach ($post->categories as $category)

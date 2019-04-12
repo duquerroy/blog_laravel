@@ -42,6 +42,7 @@ class PostController extends Controller
 
     public function update(Post $post, Request $request)
     {
+        $this->authorize('update', $post);
         $this->validator(request()->all())->validate();
         $path = $post->name;
         if ($request->image){
@@ -52,8 +53,6 @@ class PostController extends Controller
         }
 
         $post['name'] = $path;
-        $post['content'] = $request->content;
-        $post['title'] = $request->title;
         $post->update(request()->all());
         $post->categories()->sync(request()->get('categories'));
         return redirect('/posts')->with('status', "L'article a bien été modifié");
@@ -80,12 +79,12 @@ class PostController extends Controller
             Storage::put('public/thumbs/' . $path, $image);
         }
 
+        $post = new Post;
+        $post->name = $path;
+        $post->content = $request->content;
+        $post->title = $request->title;
+        $request->user()->posts()->save($post);
         
-        $post['name'] = $path;
-        $post['content'] = $request->content;
-        $post['title'] = $request->title;
-        $post['user_id'] = $request->user()->id;
-        $post = Post::create($post);
         $post->categories()->sync(request()->get('categories'));
 
         return redirect('/posts')->with('status', "L'article a bien été créé");;
@@ -93,6 +92,7 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
+        $this->authorize('delete', $post);
         if ($post->delete()){
             return response()->json([
                 'id' => $post->id
